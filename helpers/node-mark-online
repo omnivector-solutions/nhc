@@ -16,6 +16,8 @@ LEADER="NHC:"
 HOSTNAME="$1"
 NOTE=""
 
+export SNAP=/snap/slurm/current
+
 echo "`date '+%Y%m%d %H:%M:%S'` [$NHC_RM] $0 $*"
 
 ### PBS (TORQUE)
