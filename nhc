@@ -411,25 +411,8 @@ function nhcmain_find_rm() {
         NHC_RM="sge"
     fi
 
-    # Search PATH for commands
-    if type -a -p -f -P pbsnodes >&/dev/null ; then
-        NHC_RM="pbs"
-        return 0
-    elif type -a -p -f -P scontrol >&/dev/null ; then
-        NHC_RM="slurm"
-        return 0
-    elif type -a -p -f -P badmin >&/dev/null ; then
-        NHC_RM="lsf"
-        return 0
-    elif type -a -p -f -P qselect >&/dev/null ; then
-        NHC_RM="sge"
-        return 0
-    fi
-
-    if [[ -z "$NHC_RM" ]]; then
-        dbg "Unable to detect resource manager."
-        return 1
-    fi
+    NHC_RM="slurm"
+    return 0
 }
 
 function nhcmain_redirect_output() {
