@@ -180,7 +180,7 @@ function nhcmain_init_env() {
     ### Variable declarations
 
     # Static variables
-    PATH="/sbin:/usr/sbin:/bin:/usr/bin"
+    PATH=$PATH:/sbin:$SNAP/usr/sbin:$SNAP/usr/bin
     if [ -f /etc/debian_version ]
     then
         SYSCONFIGDIR="/etc/default"
