@@ -180,7 +180,7 @@ function nhcmain_init_env() {
     ### Variable declarations
 
     # Static variables
-    PATH="/sbin:/usr/sbin:/bin:/usr/bin"
+    PATH=$PATH:/sbin:$SNAP/usr/sbin:$SNAP/usr/bin
     if [ -f /etc/debian_version ]
     then
         SYSCONFIGDIR="/etc/default"
@@ -402,34 +402,8 @@ function nhcmain_find_rm() {
     local DIR
     local -a DIRLIST
 
-    if [[ -d /var/spool/torque ]]; then
-        NHC_RM="pbs"
-        return 0
-    elif [[ -n "$SGE_ROOT" && -x "$SGE_ROOT/util/arch" ]]; then
-        # SGE binaries typically won't be on the path defined above in the
-        # load sensor environment, but SGE_ROOT will be there.
-        NHC_RM="sge"
-    fi
-
-    # Search PATH for commands
-    if type -a -p -f -P pbsnodes >&/dev/null ; then
-        NHC_RM="pbs"
-        return 0
-    elif type -a -p -f -P scontrol >&/dev/null ; then
-        NHC_RM="slurm"
-        return 0
-    elif type -a -p -f -P badmin >&/dev/null ; then
-        NHC_RM="lsf"
-        return 0
-    elif type -a -p -f -P qselect >&/dev/null ; then
-        NHC_RM="sge"
-        return 0
-    fi
-
-    if [[ -z "$NHC_RM" ]]; then
-        dbg "Unable to detect resource manager."
-        return 1
-    fi
+    NHC_RM="slurm"
+    return 0
 }
 
 function nhcmain_redirect_output() {
